@@ -1,7 +1,6 @@
 name: Build APK
 
 on:
-  workflow_dispatch:
   workflow_call:
     inputs:
       variant:
@@ -19,7 +18,6 @@ on:
 
 jobs:
   build:
-    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -90,24 +88,24 @@ jobs:
 
       - name: Upload Release APK for ${{ matrix.arch }}
         if: inputs.variant == 'Release'
-        continue-on-error: true
         uses: actions/upload-artifact@v7
         with:
-          name: release apk (${{ matrix.arch }})
+          name: release-apk-${{ matrix.arch }}
           path: ZalithLauncher/build/outputs/apk/release/*.apk
+          if-no-files-found: error
 
       - name: Upload Release Mapping for ${{ matrix.arch }}
         if: inputs.variant == 'Release'
-        continue-on-error: true
         uses: actions/upload-artifact@v7
         with:
-          name: mapping (${{ matrix.arch }})
+          name: mapping-${{ matrix.arch }}
           path: ZalithLauncher/build/outputs/mapping/release/mapping.txt
+          if-no-files-found: error
 
       - name: Upload Debug APK for ${{ matrix.arch }}
         if: inputs.variant == 'Debug'
-        continue-on-error: true
         uses: actions/upload-artifact@v7
         with:
-          name: debug apk (${{ matrix.arch }})
+          name: debug-apk-${{ matrix.arch }}
           path: ZalithLauncher/build/outputs/apk/debug/*.apk
+          if-no-files-found: error

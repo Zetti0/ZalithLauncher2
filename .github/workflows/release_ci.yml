@@ -40,10 +40,9 @@ jobs:
 
           mkdir -p ./mappings
           version="${GITHUB_REF_NAME#v}"
-          for dir in ./artifacts/mapping*; do
+          for dir in ./artifacts/mapping-*; do
             [ -d "$dir" ] || continue
-            arch="${dir##*mapping \(}"
-            arch="${arch%\)}"
+            arch="${dir##*/mapping-}"
             case "$arch" in
               all) abi="" ;;
               arm) abi="armeabi-v7a" ;;
