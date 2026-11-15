@@ -225,9 +225,9 @@
     <!-- Error message for HTTP 504 responses; %s is the status code -->
     <string name="error_gateway_timeout">(%s) The server did not receive a timely response</string>
     <!-- Subtitle shown below the animated welcome title -->
-    <string name="welcome_screen_subtitle">Come and experience something new.</string>
+    <string name="welcome_screen_subtitle">Unofficial community fork of ZalithLauncher2.</string>
     <!-- First welcome introduction paragraph; %1$s is the launcher name -->
-    <string name="welcome_screen_intro_primary">Welcome to %1$s, a third-party Minecraft: Java Edition launcher designed for Android devices.</string>
+    <string name="welcome_screen_intro_primary">Welcome to %1$s, an unofficial community fork for Minecraft: Java Edition on Android.</string>
     <!-- Second introduction paragraph describing the PojavLauncher core -->
     <string name="welcome_screen_intro_core">Powered by PojavLauncher, it provides a modern game launch and management experience.</string>
     <!-- Heading of the agreement links on the welcome screen -->
@@ -934,6 +934,7 @@
     <string name="account_type_microsoft">Microsoft</string>
     <!-- Offline login option in the add account menu; also the type label on account cards -->
     <string name="account_type_local">Offline</string>
+    <string name="account_local_lan_note">Offline accounts can play on LAN when the host allows offline players. Servers requiring Microsoft authentication will reject them.</string>
     <!-- Title of the dialog for adding a new authentication server -->
     <string name="account_add_new_server">Add Auth Server</string>
     <!-- Item in the add account menu that opens the add auth server dialog -->

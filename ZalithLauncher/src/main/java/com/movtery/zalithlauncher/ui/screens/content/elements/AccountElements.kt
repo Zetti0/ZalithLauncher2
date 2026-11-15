@@ -440,12 +440,7 @@ fun AccountItem(
 @Composable
 fun LoginMenuDialog(
     onDismissRequest: () -> Unit,
-    onMicrosoftLogin: () -> Unit,
     onLocalLogin: () -> Unit,
-    authServers: List<AuthServer>,
-    onAuthServerLogin: (server: AuthServer) -> Unit,
-    onAddAuthServer: () -> Unit,
-    onDeleteAuthServer: (server: AuthServer) -> Unit,
 ) {
     Dialog(
         onDismissRequest = onDismissRequest,
@@ -470,88 +465,25 @@ fun LoginMenuDialog(
                 shadowElevation = 6.dp
             ) {
                 Column(
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 8.dp)
                 ) {
-                    Row(
+                    LoginItem(
                         modifier = Modifier
-                            .weight(1f, fill = false)
                             .fillMaxWidth()
-                    ) {
-                        Column(
-                            modifier = Modifier
-                                .weight(1f)
-                                .verticalScroll(rememberScrollState())
-                                .padding(vertical = 12.dp)
-                                .padding(start = 12.dp, end = 6.dp),
-                            verticalArrangement = Arrangement.spacedBy(12.dp)
-                        ) {
-                            //微软登录
-                            LoginItem(
-                                modifier = Modifier.fillMaxWidth(),
-                                title = stringResource(R.string.account_type_microsoft),
-                                onClick = {
-                                    onMicrosoftLogin()
-                                    onDismissRequest()
-                                }
-                            )
-                            //离线登录
-                            LoginItem(
-                                modifier = Modifier.fillMaxWidth(),
-                                title = stringResource(R.string.account_type_local),
-                                onClick = {
-                                    onLocalLogin()
-                                    onDismissRequest()
-                                }
-                            )
+                            .padding(horizontal = 12.dp),
+                        title = stringResource(R.string.account_type_local),
+                        onClick = {
+                            onLocalLogin()
+                            onDismissRequest()
                         }
-
-                        LazyColumn(
-                            modifier = Modifier.weight(1f),
-                            contentPadding = PaddingValues(
-                                start = 6.dp,
-                                top = 12.dp,
-                                end = 12.dp,
-                                bottom = 12.dp
-                            ),
-                            verticalArrangement = Arrangement.spacedBy(12.dp)
-                        ) {
-                            item {
-                                //添加认证服务器
-                                InfoLayoutTextItem(
-                                    modifier = Modifier.fillMaxWidth(),
-                                    title = stringResource(R.string.account_add_new_server_button),
-                                    showArrow = true,
-                                    onClick = {
-                                        onAddAuthServer()
-                                        onDismissRequest()
-                                    }
-                                )
-                            }
-
-                            items(authServers) { server ->
-                                LoginItem(
-                                    title = server.serverName,
-                                    icon = {
-                                        IconButton(
-                                            modifier = Modifier.size(22.dp),
-                                            onClick = {
-                                                onDeleteAuthServer(server)
-                                            }
-                                        ) {
-                                            Icon(
-                                                painter = painterResource(R.drawable.ic_delete_outlined),
-                                                contentDescription = stringResource(R.string.generic_delete)
-                                            )
-                                        }
-                                    },
-                                    onClick = {
-                                        onAuthServerLogin(server)
-                                        onDismissRequest()
-                                    }
-                                )
-                            }
-                        }
-                    }
+                    )
+                    Text(
+                        modifier = Modifier.padding(horizontal = 24.dp, vertical = 8.dp),
+                        text = stringResource(R.string.account_local_lan_note),
+                        style = MaterialTheme.typography.bodySmall
+                    )
 
                     Button(
                         modifier = Modifier
@@ -574,12 +506,7 @@ private fun PreviewLoginMenuDialog() {
     MaterialExpressiveTheme {
         LoginMenuDialog(
             onDismissRequest = {},
-            onMicrosoftLogin = {},
-            onLocalLogin = {},
-            authServers = emptyList(),
-            onAuthServerLogin = {},
-            onAddAuthServer = {},
-            onDeleteAuthServer = {}
+            onLocalLogin = {}
         )
     }
 }
