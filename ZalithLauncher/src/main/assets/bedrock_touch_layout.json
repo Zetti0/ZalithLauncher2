@@ -397,29 +397,20 @@
       "normalButtons": [
         {
           "text": {
-            "default": "Attack",
-            "matchQueue": [
-              {
-                "language_tag": "pt-BR",
-                "value": "ATACAR"
-              },
-              {
-                "language_tag": "pt",
-                "value": "ATACAR"
-              }
-            ]
+            "default": "⚔",
+            "matchQueue": []
           },
           "uuid": "90dd63546ff14a92be",
           "position": {
-            "x": 8750,
-            "y": 6150
+            "x": 7600,
+            "y": 4650
           },
           "buttonSize": {
             "type": "percentage",
             "widthDp": 50.0,
             "heightDp": 50.0,
-            "widthPercentage": 1500,
-            "heightPercentage": 1500,
+            "widthPercentage": 1350,
+            "heightPercentage": 1350,
             "widthReference": "screen_height",
             "heightReference": "screen_height"
           },
@@ -433,33 +424,25 @@
           ],
           "isSwipple": false,
           "isPenetrable": true,
-          "isToggleable": false
+          "isToggleable": false,
+          "textBold": true
         },
         {
           "text": {
-            "default": "Use",
-            "matchQueue": [
-              {
-                "language_tag": "pt-BR",
-                "value": "USAR"
-              },
-              {
-                "language_tag": "pt",
-                "value": "USAR"
-              }
-            ]
+            "default": "☝",
+            "matchQueue": []
           },
           "uuid": "96e156843d754adda4",
           "position": {
-            "x": 9550,
-            "y": 7000
+            "x": 9000,
+            "y": 5800
           },
           "buttonSize": {
             "type": "percentage",
             "widthDp": 50.0,
             "heightDp": 50.0,
-            "widthPercentage": 1500,
-            "heightPercentage": 1500,
+            "widthPercentage": 1350,
+            "heightPercentage": 1350,
             "widthReference": "screen_height",
             "heightReference": "screen_height"
           },
@@ -473,33 +456,25 @@
           ],
           "isSwipple": false,
           "isPenetrable": true,
-          "isToggleable": false
+          "isToggleable": false,
+          "textBold": true
         },
         {
           "text": {
-            "default": "Sneak",
-            "matchQueue": [
-              {
-                "language_tag": "pt-BR",
-                "value": "AGACHAR"
-              },
-              {
-                "language_tag": "pt",
-                "value": "AGACHAR"
-              }
-            ]
+            "default": "↓",
+            "matchQueue": []
           },
           "uuid": "53bea7b9f6974f6b9a",
           "position": {
-            "x": 8150,
-            "y": 8150
+            "x": 9000,
+            "y": 3900
           },
           "buttonSize": {
             "type": "percentage",
             "widthDp": 50.0,
             "heightDp": 50.0,
-            "widthPercentage": 1500,
-            "heightPercentage": 1500,
+            "widthPercentage": 1350,
+            "heightPercentage": 1350,
             "widthReference": "screen_height",
             "heightReference": "screen_height"
           },
@@ -513,33 +488,25 @@
           ],
           "isSwipple": false,
           "isPenetrable": false,
-          "isToggleable": true
+          "isToggleable": true,
+          "textBold": true
         },
         {
           "text": {
-            "default": "Jump",
-            "matchQueue": [
-              {
-                "language_tag": "pt-BR",
-                "value": "PULAR"
-              },
-              {
-                "language_tag": "pt",
-                "value": "PULAR"
-              }
-            ]
+            "default": "↑",
+            "matchQueue": []
           },
           "uuid": "ece30bbe48204713ae",
           "position": {
-            "x": 9350,
-            "y": 8550
+            "x": 9000,
+            "y": 700
           },
           "buttonSize": {
             "type": "percentage",
             "widthDp": 50.0,
             "heightDp": 50.0,
-            "widthPercentage": 1500,
-            "heightPercentage": 1500,
+            "widthPercentage": 1350,
+            "heightPercentage": 1350,
             "widthReference": "screen_height",
             "heightReference": "screen_height"
           },
@@ -553,7 +520,40 @@
           ],
           "isSwipple": false,
           "isPenetrable": false,
-          "isToggleable": false
+          "isToggleable": false,
+          "textBold": true
+        },
+        {
+          "text": {
+            "default": "»",
+            "matchQueue": []
+          },
+          "uuid": "7a4e1fcb6d9244fab1",
+          "position": {
+            "x": 7600,
+            "y": 3100
+          },
+          "buttonSize": {
+            "type": "percentage",
+            "widthDp": 50.0,
+            "heightDp": 50.0,
+            "widthPercentage": 1350,
+            "heightPercentage": 1350,
+            "widthReference": "screen_height",
+            "heightReference": "screen_height"
+          },
+          "buttonStyle": "b3d8f49a1207",
+          "visibilityType": "always",
+          "clickEvents": [
+            {
+              "type": "key",
+              "key": "GLFW_KEY_LEFT_CONTROL"
+            }
+          ],
+          "isSwipple": false,
+          "isPenetrable": true,
+          "isToggleable": true,
+          "textBold": true
         }
       ]
     },
@@ -566,10 +566,10 @@
         {
           "uuid": "b581292c47294e099d",
           "position": {
-            "x": 1121,
-            "y": 7953
+            "x": 700,
+            "y": 6000
           },
-          "sizePercentage": 3417,
+          "sizePercentage": 4300,
           "lockEvents": [
             {
               "type": "key",
