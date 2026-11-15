@@ -17,7 +17,7 @@ O nome do app passa a ser **MoonLauncher**, com identificador Android próprio (
 
 O fork inclui um layout de controles touch inspirado nos controles do Bedrock e uma opção de conta Offline. A conta Offline não autentica na Microsoft e só funciona em mundos/servidores que aceitam jogadores offline; servidores que exigem autenticação oficial não aceitam esse tipo de conta.
 
-A release ARM64 já publicada é do nome antigo e não corresponde ao MoonLauncher. O APK MoonLauncher será publicado depois que a nova assinatura estiver configurada.
+O APK Debug ARM64 para aparelhos como o Galaxy S23 com Snapdragon já está publicado em [Releases](https://github.com/Zetti0/ZalithLauncher2/releases/tag/moonlauncher-2.8.2-arm64-debug). É uma build de teste; a build Release assinada depende da nova keystore e dos secrets do GitHub Actions.
 
 ## Traduções
 
