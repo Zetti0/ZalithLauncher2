@@ -49,13 +49,13 @@ jobs:
           test -n "$apk"
           abi="${{ inputs.arch }}"
           if [ "$abi" = "arm64" ]; then abi="arm64-v8a"; fi
-          cp "$apk" "./ZalithLauncher2-2.8.2-${abi}-debug.apk"
+          cp "$apk" "./MoonLauncher-2.8.2-${abi}-debug.apk"
 
       - name: Upload APK to release
         uses: softprops/action-gh-release@v3
         with:
           tag_name: ${{ inputs.tag }}
-          files: ./ZalithLauncher2-2.8.2-*-debug.apk
+          files: ./MoonLauncher-2.8.2-*-debug.apk
           fail_on_unmatched_files: true
           prerelease: true
           draft: false
