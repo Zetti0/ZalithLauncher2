@@ -83,6 +83,7 @@ object ControlManager {
             if (files.isEmpty()) {
                 unpackDefaultControl(context)
             }
+            unpackBedrockTouchControl(context)
             refresh()
         }
     }
@@ -158,6 +159,24 @@ object ControlManager {
             context.copyAssetFile(fileName = "default_layout.json", output = file, overwrite = false)
         } catch (e: Exception) {
             Logger.warning(TAG, "Failed to unpack default control layout", e)
+        }
+    }
+
+    /**
+     * Install the Bedrock-inspired touch layout without replacing player layouts.
+     */
+    private suspend fun unpackBedrockTouchControl(
+        context: Context
+    ) = withContext(Dispatchers.IO) {
+        try {
+            val file = File(PathManager.DIR_CONTROL_LAYOUTS, "bedrock-touch.json")
+            context.copyAssetFile(
+                fileName = "bedrock_touch_layout.json",
+                output = file,
+                overwrite = false
+            )
+        } catch (e: Exception) {
+            Logger.warning(TAG, "Failed to unpack Bedrock touch control layout", e)
         }
     }
 

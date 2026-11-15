@@ -15,6 +15,7 @@ jobs:
       variant: Release
     secrets:
       KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+      KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
       STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
       OAUTH_CLIENT_ID: ${{ secrets.OAUTH_CLIENT_ID }}
       CURSEFORGE_API_KEY: ${{ secrets.CURSEFORGE_API_KEY }}
@@ -40,10 +41,9 @@ jobs:
 
           mkdir -p ./mappings
           version="${GITHUB_REF_NAME#v}"
-          for dir in ./artifacts/mapping*; do
+          for dir in ./artifacts/mapping-*; do
             [ -d "$dir" ] || continue
-            arch="${dir##*mapping \(}"
-            arch="${arch%\)}"
+            arch="${dir##*/mapping-}"
             case "$arch" in
               all) abi="" ;;
               arm) abi="armeabi-v7a" ;;

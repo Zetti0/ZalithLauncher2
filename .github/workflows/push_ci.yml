@@ -4,10 +4,17 @@ on:
   push:
     branches:
       - '**'
+  pull_request:
+    branches:
+      - main
   workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
   Build:
+    if: github.event_name != 'pull_request'
     uses: ./.github/workflows/build.yml
     with:
       variant: Debug
@@ -16,3 +23,9 @@ jobs:
       STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
       OAUTH_CLIENT_ID: ${{ secrets.OAUTH_CLIENT_ID }}
       CURSEFORGE_API_KEY: ${{ secrets.CURSEFORGE_API_KEY }}
+
+  Build-PR:
+    if: github.event_name == 'pull_request'
+    uses: ./.github/workflows/build.yml
+    with:
+      variant: Debug

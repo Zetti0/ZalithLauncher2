@@ -1,4 +1,4 @@
-# Zalith Launcher 2 — fork comunitário
+# MoonLauncher — fork comunitário
 ![Downloads](https://img.shields.io/github/downloads/Zetti0/ZalithLauncher2/total)
 [![Sponsor](https://img.shields.io/badge/sponsor-30363D?logo=GitHub-Sponsors)](https://afdian.com/a/MovTery)
 
@@ -7,15 +7,17 @@
 > [!IMPORTANT]
 > Este repositório é um fork comunitário do [ZalithLauncher2 oficial](https://github.com/ZalithLauncher/ZalithLauncher2). As alterações e builds publicados por `Zetti0` aqui são independentes e não são releases oficiais do projeto original.
 
-O **Zalith Launcher 2** é um launcher para Android voltado ao **Minecraft: Java Edition**. O projeto usa o [PojavLauncher](https://github.com/PojavLauncherTeam/PojavLauncher/tree/v3_openjdk/app_pojavlauncher/src/main/jni) como base de execução e constrói a interface com **Jetpack Compose** e **Material Design 3**. Ele é um projeto separado do [ZalithLauncher original](https://github.com/ZalithLauncher/ZalithLauncher).
+O **MoonLauncher** é um launcher para Android voltado ao **Minecraft: Java Edition**. O projeto usa o [PojavLauncher](https://github.com/PojavLauncherTeam/PojavLauncher/tree/v3_openjdk/app_pojavlauncher/src/main/jni) como base de execução e constrói a interface com **Jetpack Compose** e **Material Design 3**. Ele é um projeto separado do [ZalithLauncher original](https://github.com/ZalithLauncher/ZalithLauncher).
 
 O repositório upstream informa que o site `zalithlauncher.cn` está em desenvolvimento e alerta sobre sites de terceiros que usam o nome Zalith Launcher sem autorização. Confira sempre o domínio e evite inserir credenciais em sites que não sejam os oficiais dos serviços que você usa.
 
-## Build de teste deste fork
+## Identidade e build de teste
 
-A release de teste inclui um layout de controles touch inspirado nos controles do Bedrock e uma opção de conta Offline. A conta Offline não autentica na Microsoft e só funciona em mundos/servidores que aceitam jogadores offline; servidores que exigem autenticação oficial não aceitam esse tipo de conta.
+O nome do app passa a ser **MoonLauncher**, com identificador Android próprio (`com.moonlauncher.launcher`) para poder coexistir com o launcher original. A tela inicial identifica o app como fork comunitário não oficial.
 
-O APK disponível é um **build Debug ARM64 para testes**, compatível com aparelhos Android ARM64 como o Galaxy S23 com Snapdragon. Baixe em [Releases](https://github.com/Zetti0/ZalithLauncher2/releases/tag/codex-debug-4adae51). Não é um build Release assinado para distribuição.
+O fork inclui um layout de controles touch inspirado nos controles do Bedrock e uma opção de conta Offline. A conta Offline não autentica na Microsoft e só funciona em mundos/servidores que aceitam jogadores offline; servidores que exigem autenticação oficial não aceitam esse tipo de conta.
+
+A release ARM64 já publicada é do nome antigo e não corresponde ao MoonLauncher. O APK MoonLauncher será publicado depois que a nova assinatura estiver configurada.
 
 ## Traduções
 
@@ -37,7 +39,18 @@ cd ZalithLauncher2
 ./gradlew ZalithLauncher:assembleDebug -Darch=arm64
 ```
 
-O parâmetro `arch` aceita `all`, `arm`, `arm64`, `x86` e `x86_64`. Os builds são feitos no GitHub Actions; para gerar um build Release assinado, o projeto também precisa da keystore e das senhas de assinatura correspondentes.
+O parâmetro `arch` aceita `all`, `arm`, `arm64`, `x86` e `x86_64`. Os builds são feitos no GitHub Actions.
+
+### Configurar assinatura Release
+
+Gere uma keystore própria fora do repositório; mantenha uma cópia de backup em local seguro e não a envie ao GitHub como arquivo público. Use o alias `moonlauncher`:
+
+```bash
+keytool -genkeypair -v -keystore moonlauncher.jks -storetype JKS -alias moonlauncher -keyalg RSA -keysize 4096 -validity 10000
+base64 -w0 moonlauncher.jks
+```
+
+No repositório GitHub, configure os secrets `KEYSTORE_BASE64` (resultado do comando base64), `STORE_PASSWORD` e `KEY_PASSWORD`. O workflow restaura a keystore somente durante o build Release. O app Debug continua usando a keystore Debug separada.
 
 ## Licença
 

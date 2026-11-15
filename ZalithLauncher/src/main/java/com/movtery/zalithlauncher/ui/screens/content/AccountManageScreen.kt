@@ -60,10 +60,8 @@ import com.movtery.zalithlauncher.R
 import com.movtery.zalithlauncher.context.COPY_LABEL_ACCOUNT_UUID
 import com.movtery.zalithlauncher.game.account.Account
 import com.movtery.zalithlauncher.game.account.AccountsManager
-import com.movtery.zalithlauncher.game.account.auth_server.data.AuthServer
 import com.movtery.zalithlauncher.game.account.isAuthServerAccount
 import com.movtery.zalithlauncher.game.account.isMicrosoftAccount
-import com.movtery.zalithlauncher.game.account.isMicrosoftLogging
 import com.movtery.zalithlauncher.game.account.wardrobe.toArmModel
 import com.movtery.zalithlauncher.game.account.yggdrasil.PlayerProfile
 import com.movtery.zalithlauncher.ui.AndroidStringText
@@ -190,7 +188,7 @@ fun AccountManageScreen(
         when (key.loginMenu) {
             FirstLoginMenu.NONE -> {}
             FirstLoginMenu.MICROSOFT -> {
-                actions.onIntent(AccountManageIntent.UpdateMicrosoftLoginOp(MicrosoftLoginOperation.Tip))
+                actions.onIntent(AccountManageIntent.UpdateLocalLoginOp(LocalLoginOperation.Edit))
             }
             FirstLoginMenu.NORMAL -> {
                 actions.onIntent(AccountManageIntent.UpdateLoginMenuOp(LoginMenuOperation.Login))
@@ -260,7 +258,7 @@ private fun AccountManageContent(
         )
     }
 
-    LoginMenuOperation(loginUiState.menuOp, actions, profileUiState.authServers)
+    LoginMenuOperation(loginUiState.menuOp, actions)
     MicrosoftLoginOperation(loginUiState.microsoftOp, actions)
     LocalLoginOperation(loginUiState.localOp, actions)
     OtherLoginOperation(loginUiState.otherOp, actions)
@@ -329,8 +327,7 @@ private fun ActionsLayout(
 @Composable
 private fun LoginMenuOperation(
     operation: LoginMenuOperation,
-    actions: AccountActions,
-    authServers: List<AuthServer>
+    actions: AccountActions
 ) {
     when (operation) {
         LoginMenuOperation.None -> {}
@@ -341,35 +338,8 @@ private fun LoginMenuOperation(
                         AccountManageIntent.UpdateLoginMenuOp(LoginMenuOperation.None)
                     )
                 },
-                authServers = authServers,
-                onMicrosoftLogin = {
-                    if (!isMicrosoftLogging()) {
-                        actions.onIntent(
-                            AccountManageIntent.UpdateMicrosoftLoginOp(
-                                MicrosoftLoginOperation.Tip
-                            )
-                        )
-                    }
-                },
                 onLocalLogin = {
                     actions.onIntent(AccountManageIntent.UpdateLocalLoginOp(LocalLoginOperation.Edit))
-                },
-                onAuthServerLogin = { server ->
-                    actions.onIntent(
-                        AccountManageIntent.UpdateOtherLoginOp(
-                            OtherLoginOperation.OnLogin(server)
-                        )
-                    )
-                },
-                onAddAuthServer = {
-                    actions.onIntent(AccountManageIntent.UpdateServerOp(ServerOperation.AddNew))
-                },
-                onDeleteAuthServer = { server ->
-                    actions.onIntent(
-                        AccountManageIntent.UpdateServerOp(
-                            ServerOperation.Delete(server)
-                        )
-                    )
                 }
             )
         }

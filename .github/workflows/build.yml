@@ -1,7 +1,6 @@
 name: Build APK
 
 on:
-  workflow_dispatch:
   workflow_call:
     inputs:
       variant:
@@ -9,6 +8,8 @@ on:
         type: string
     secrets:
       KEY_PASSWORD:
+        required: false
+      KEYSTORE_BASE64:
         required: false
       STORE_PASSWORD:
         required: false
@@ -19,7 +20,6 @@ on:
 
 jobs:
   build:
-    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -28,6 +28,7 @@ jobs:
 
     env:
       KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+      KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
       STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
       OAUTH_CLIENT_ID: ${{ secrets.OAUTH_CLIENT_ID }}
       CURSEFORGE_API_KEY: ${{ secrets.CURSEFORGE_API_KEY }}
@@ -83,6 +84,20 @@ jobs:
           test -f "$ndk/source.properties"
           echo "ANDROID_NDK_HOME=$ndk" >> "$GITHUB_ENV"
 
+      - name: Restore MoonLauncher release keystore
+        if: inputs.variant == 'Release'
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+          STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+        run: |
+          set -euo pipefail
+          test -n "$KEYSTORE_BASE64" || { echo "::error::Configure KEYSTORE_BASE64 in repository Actions secrets."; exit 1; }
+          test -n "$STORE_PASSWORD" || { echo "::error::Configure STORE_PASSWORD in repository Actions secrets."; exit 1; }
+          test -n "$KEY_PASSWORD" || { echo "::error::Configure KEY_PASSWORD in repository Actions secrets."; exit 1; }
+          printf '%s' "$KEYSTORE_BASE64" | base64 --decode > ZalithLauncher/moonlauncher.jks
+          chmod 600 ZalithLauncher/moonlauncher.jks
+
       - name: Build APK for ${{ matrix.arch }}
         run: |
           chmod +x gradlew
@@ -90,24 +105,24 @@ jobs:
 
       - name: Upload Release APK for ${{ matrix.arch }}
         if: inputs.variant == 'Release'
-        continue-on-error: true
         uses: actions/upload-artifact@v7
         with:
-          name: release apk (${{ matrix.arch }})
+          name: release-apk-${{ matrix.arch }}
           path: ZalithLauncher/build/outputs/apk/release/*.apk
+          if-no-files-found: error
 
       - name: Upload Release Mapping for ${{ matrix.arch }}
         if: inputs.variant == 'Release'
-        continue-on-error: true
         uses: actions/upload-artifact@v7
         with:
-          name: mapping (${{ matrix.arch }})
+          name: mapping-${{ matrix.arch }}
           path: ZalithLauncher/build/outputs/mapping/release/mapping.txt
+          if-no-files-found: error
 
       - name: Upload Debug APK for ${{ matrix.arch }}
         if: inputs.variant == 'Debug'
-        continue-on-error: true
         uses: actions/upload-artifact@v7
         with:
-          name: debug apk (${{ matrix.arch }})
+          name: debug-apk-${{ matrix.arch }}
           path: ZalithLauncher/build/outputs/apk/debug/*.apk
+          if-no-files-found: error
