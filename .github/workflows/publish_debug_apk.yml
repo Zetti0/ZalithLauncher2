@@ -1,0 +1,61 @@
+name: Attach Debug APK to Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      run_id:
+        description: Build CI run containing the APK artifact
+        required: true
+        default: "43704954006"
+        type: string
+      tag:
+        description: Existing published release tag
+        required: true
+        default: codex-debug-4adae51
+        type: string
+      arch:
+        description: APK architecture
+        required: true
+        default: arm64
+        type: choice
+        options:
+          - arm64
+          - arm
+          - x86
+          - x86_64
+          - all
+
+permissions:
+  actions: read
+  contents: write
+
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Debug APK artifact
+        uses: actions/download-artifact@v8
+        with:
+          name: debug-apk-${{ inputs.arch }}
+          run-id: ${{ inputs.run_id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: ./artifact
+
+      - name: Prepare release asset
+        shell: bash
+        run: |
+          set -euo pipefail
+          apk="$(find ./artifact -type f -name '*.apk' -print -quit)"
+          test -n "$apk"
+          abi="${{ inputs.arch }}"
+          if [ "$abi" = "arm64" ]; then abi="arm64-v8a"; fi
+          cp "$apk" "./ZalithLauncher2-2.8.2-${abi}-debug.apk"
+
+      - name: Upload APK to release
+        uses: softprops/action-gh-release@v3
+        with:
+          tag_name: ${{ inputs.tag }}
+          files: ./ZalithLauncher2-2.8.2-*-debug.apk
+          fail_on_unmatched_files: true
+          prerelease: true
+          draft: false
